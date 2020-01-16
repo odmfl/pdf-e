@@ -1,0 +1,28 @@
+image: "registry.gitlab.e.foundation:5000/e/apps/docker-android-apps-cicd:latest"
+
+stages:
+  - build
+
+before_script:
+  - export GRADLE_USER_HOME=$(pwd)/.gradle
+  - chmod +x ./gradlew
+  - ./gradlew clean
+
+cache:
+  key: ${CI_PROJECT_ID}
+  paths:
+    - .gradle/
+
+build:
+  stage: build
+  script:
+    - |
+      ./gradlew assemble
+      retval=$?
+      if [$retval -ne 0]; then
+        echo "error on building, exit code: "$retval
+        exit $retval
+      fi
+  artifacts:
+    paths:
+      - app/build/outputs/
