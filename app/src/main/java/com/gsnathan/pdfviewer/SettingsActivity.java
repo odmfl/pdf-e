@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -12,7 +14,10 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
+import androidx.annotation.ColorInt;
 import androidx.core.app.NavUtils;
 
 /**
@@ -76,6 +81,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
         });
 
+        updateAccentColor();
+
     }
 
     private void setupActionBar() {
@@ -119,5 +126,27 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
     }
+
+    private void updateAccentColor(){
+        //change toolbar color
+        getSupportActionBar().setBackgroundDrawable(
+                new ColorDrawable(MainActivity.ACCENT_COLOR));
+
+        //change status bar color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(darkenColor(MainActivity.ACCENT_COLOR));
+        }
+    }
+
+    @ColorInt
+    int darkenColor(@ColorInt int color) {
+        float[] hsv = new float[3];
+        android.graphics.Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.8f;
+        return android.graphics.Color.HSVToColor(hsv);
+    }
+
 
 }

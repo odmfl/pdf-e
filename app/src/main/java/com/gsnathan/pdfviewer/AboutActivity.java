@@ -24,14 +24,23 @@
 
 package com.gsnathan.pdfviewer;
 
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.franmontiel.attributionpresenter.AttributionPresenter;
@@ -52,6 +61,19 @@ public class AboutActivity extends CyaneaAppCompatActivity {
         setContentView(R.layout.activity_about);
         initUI();
         setUpToolBar();
+
+        updateAccentColor();
+
+        setTextViewDrawableColor(((TextView) findViewById(R.id.introView)), MainActivity.ACCENT_COLOR);
+        setTextViewDrawableColor(((TextView) findViewById(R.id.changeView)), MainActivity.ACCENT_COLOR);
+        setTextViewDrawableColor((TextView) findViewById(R.id.licenseView), MainActivity.ACCENT_COLOR);
+        setTextViewDrawableColor((TextView) findViewById(R.id.privacyView), MainActivity.ACCENT_COLOR);
+        setTextViewDrawableColor((TextView) findViewById(R.id.codeView), MainActivity.ACCENT_COLOR);
+        setTextViewDrawableColor((TextView) findViewById(R.id.libView), MainActivity.ACCENT_COLOR);
+        setTextViewDrawableColor((TextView) findViewById(R.id.emailView), MainActivity.ACCENT_COLOR);
+        setTextViewDrawableColor((TextView) findViewById(R.id.gitView), MainActivity.ACCENT_COLOR);
+
+
     }
 
     private void setUpToolBar() {
@@ -63,6 +85,8 @@ public class AboutActivity extends CyaneaAppCompatActivity {
 
     private void initUI() {
         //initialize the textview
+
+
         versionView = (TextView) findViewById(R.id.versionTextView);
         //initialize the toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar_about);
@@ -75,7 +99,14 @@ public class AboutActivity extends CyaneaAppCompatActivity {
             versionView.setText(APP_VERSION_RELEASE);
         }
     }
+    private void setTextViewDrawableColor(TextView textView, int color) {
 
+        for (Drawable drawable : textView.getCompoundDrawablesRelative()) {
+            if (drawable != null) {
+                drawable.setTint(color);
+            }
+        }
+    }
     public void replayIntro(View v) {
         //navigate to intro class (replay the intro)
         startActivity(Utils.navIntent(getApplicationContext(), MainIntroActivity.class));
@@ -223,5 +254,27 @@ public class AboutActivity extends CyaneaAppCompatActivity {
         }
         return false;
     }
+
+    private void updateAccentColor(){
+        //change toolbar color
+        getSupportActionBar().setBackgroundDrawable(
+                new ColorDrawable(MainActivity.ACCENT_COLOR));
+
+        //change status bar color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(darkenColor(MainActivity.ACCENT_COLOR));
+        }
+    }
+
+    @ColorInt
+    int darkenColor(@ColorInt int color) {
+        float[] hsv = new float[3];
+        android.graphics.Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.8f;
+        return android.graphics.Color.HSVToColor(hsv);
+    }
+
 
 }

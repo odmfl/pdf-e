@@ -27,6 +27,7 @@ package com.gsnathan.pdfviewer;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,8 +35,10 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -46,8 +49,10 @@ import android.print.PrintJob;
 import android.print.PrintManager;
 import android.provider.OpenableColumns;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -55,8 +60,11 @@ import android.os.Bundle;
 
 import android.text.InputType;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -106,6 +114,7 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
 
     @ViewById
     PDFView pdfView;
+    public static int ACCENT_COLOR=0;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -129,6 +138,8 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
         RateThisApp.init(config);
         RateThisApp.onCreate(this);
         RateThisApp.showRateDialogIfNeeded(this);
+
+        ACCENT_COLOR=fetchAccentColor(this);
     }
 
     private void onFirstInstall() {
@@ -501,6 +512,7 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
         getMenuInflater().inflate(R.menu.menu, menu);
 
         BottomNavigationView bot_view = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bot_view.setBackgroundColor(ACCENT_COLOR);
         Menu bottomMenu = bot_view.getMenu();
 
         for (int i = 0; i < bottomMenu.size() - 1; i++) {
@@ -553,9 +565,9 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
             case R.id.action_about:
                 startActivity(Utils.navIntent(this, AboutActivity.class));
                 return true;
-            case R.id.theme:
-                startActivity(Utils.navIntent(getApplicationContext(), CyaneaSettingsActivity.class));
-                return true;
+//            case R.id.theme:
+//                startActivity(Utils.navIntent(getApplicationContext(), CyaneaSettingsActivity.class));
+//                return true;
             case R.id.settings:
                 navToSettings();
                 return true;
@@ -577,5 +589,42 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
         view.animate().translationY(0).setDuration(100);
 
     }
+
+
+    /*
+     * get Accent color from OS
+     * */
+    private int fetchAccentColor(Context context) {
+
+        TypedValue typedValue = new TypedValue();
+        ContextThemeWrapper contextThemeWrapper = new ContextThemeWrapper(this,
+                android.R.style.Theme_DeviceDefault);
+        contextThemeWrapper.getTheme().resolveAttribute(android.R.attr.colorAccent,
+                typedValue, true);
+        int color_accent = typedValue.data;
+        Log.e("TAG", "accent Colour  #"+Integer.toHexString(color_accent));
+
+        //change toolbar color
+        getSupportActionBar().setBackgroundDrawable(
+                new ColorDrawable(color_accent));
+
+        //change status bar color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+            window.setStatusBarColor(darkenColor(color_accent));
+        }
+
+        return color_accent;
+    }
+
+    @ColorInt int darkenColor(@ColorInt int color) {
+        float[] hsv = new float[3];
+        android.graphics.Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.8f;
+        return android.graphics.Color.HSVToColor(hsv);
+    }
+
 }
 
