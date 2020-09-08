@@ -38,9 +38,9 @@
         android:orderInCategory="2"
         app:showAsAction="never"  />
 
-    <item
+    <!--<item
         android:id="@+id/theme"
         android:orderInCategory="1"
         android:title="@string/theme_picker"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
 </menu>
