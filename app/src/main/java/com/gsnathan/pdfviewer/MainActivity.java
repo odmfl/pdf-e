@@ -598,7 +598,7 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
 
         TypedValue typedValue = new TypedValue();
         ContextThemeWrapper contextThemeWrapper = new ContextThemeWrapper(this,
-                android.R.style.Theme_DeviceDefault);
+                android.R.style.Theme_DeviceDefault_Light);
         contextThemeWrapper.getTheme().resolveAttribute(android.R.attr.colorAccent,
                 typedValue, true);
         int color_accent = typedValue.data;
