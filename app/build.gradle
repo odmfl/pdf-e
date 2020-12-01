@@ -66,9 +66,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    aaptOptions {
+        additionalParameters '-I', 'e-ui-sdk.jar'
+    }
+
 }
 
 dependencies {
+    compileOnly files("../e-ui-sdk.jar")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.2.0-alpha01'
@@ -107,5 +113,5 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
     //Theme Engine
-    implementation 'com.jaredrummler:cyanea:1.0.2'
+   // implementation 'com.jaredrummler:cyanea:1.0.2'
 }
