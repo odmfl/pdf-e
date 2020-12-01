@@ -46,51 +46,37 @@ import android.widget.TextView;
 import com.franmontiel.attributionpresenter.AttributionPresenter;
 import com.franmontiel.attributionpresenter.entities.Attribution;
 import com.franmontiel.attributionpresenter.entities.License;
-import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity;
+//import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity;
 
-public class AboutActivity extends CyaneaAppCompatActivity {
+public class AboutActivity extends AppCompatActivity {//CyaneaAppCompatActivity {
 
     TextView versionView;   //shows the version
     private final String APP_VERSION_RELEASE = "Version " + Utils.getAppVersion();   //contains Version + the version number
     private final String APP_VERSION_DEBUG = "Version " + Utils.getAppVersion() + "-debug";   //contains Version + the version number + debug
-    private Toolbar toolbar;
+   // private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         initUI();
-        setUpToolBar();
-
-        updateAccentColor();
-
-        setTextViewDrawableColor(((TextView) findViewById(R.id.introView)), MainActivity.ACCENT_COLOR);
-        setTextViewDrawableColor(((TextView) findViewById(R.id.changeView)), MainActivity.ACCENT_COLOR);
-        setTextViewDrawableColor((TextView) findViewById(R.id.licenseView), MainActivity.ACCENT_COLOR);
-        setTextViewDrawableColor((TextView) findViewById(R.id.privacyView), MainActivity.ACCENT_COLOR);
-        setTextViewDrawableColor((TextView) findViewById(R.id.codeView), MainActivity.ACCENT_COLOR);
-        setTextViewDrawableColor((TextView) findViewById(R.id.libView), MainActivity.ACCENT_COLOR);
-        setTextViewDrawableColor((TextView) findViewById(R.id.emailView), MainActivity.ACCENT_COLOR);
-        setTextViewDrawableColor((TextView) findViewById(R.id.gitView), MainActivity.ACCENT_COLOR);
-
+       // setUpToolBar();
 
     }
 
-    private void setUpToolBar() {
-        setSupportActionBar(toolbar);
-        final long token = Binder.clearCallingIdentity();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-    }
+//    private void setUpToolBar() {
+//        setSupportActionBar(toolbar);
+//        final long token = Binder.clearCallingIdentity();
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//
+//    }
 
     private void initUI() {
         //initialize the textview
 
 
         versionView = (TextView) findViewById(R.id.versionTextView);
-        //initialize the toolbar
-        toolbar = (Toolbar) findViewById(R.id.toolbar_about);
-
+        updateActionBar();
         // check if app is debug
         if (BuildConfig.DEBUG) {
             versionView.setText(APP_VERSION_DEBUG);
@@ -107,6 +93,14 @@ public class AboutActivity extends CyaneaAppCompatActivity {
             }
         }
     }
+    private void updateActionBar() {
+
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+
     public void replayIntro(View v) {
         //navigate to intro class (replay the intro)
         startActivity(Utils.navIntent(getApplicationContext(), MainIntroActivity.class));
@@ -208,13 +202,13 @@ public class AboutActivity extends CyaneaAppCompatActivity {
                                 .setWebsite("https://github.com/TonnyL/WhatsNew")
                                 .build()
                 )
-                .addAttributions(
-                        new Attribution.Builder("Cyanea")
-                                .addCopyrightNotice("Copyright 2018 Jared Rummler")
-                                .addLicense(License.APACHE)
-                                .setWebsite("https://github.com/jaredrummler/Cyanea")
-                                .build()
-                )
+//                .addAttributions(
+//                        new Attribution.Builder("Cyanea")
+//                                .addCopyrightNotice("Copyright 2018 Jared Rummler")
+//                                .addLicense(License.APACHE)
+//                                .setWebsite("https://github.com/jaredrummler/Cyanea")
+//                                .build()
+//                )
                 .addAttributions(
                         new Attribution.Builder("PhysicsLayout")
                                 .addCopyrightNotice("Copyright 2016 John Carlson")
@@ -255,26 +249,6 @@ public class AboutActivity extends CyaneaAppCompatActivity {
         return false;
     }
 
-    private void updateAccentColor(){
-        //change toolbar color
-        getSupportActionBar().setBackgroundDrawable(
-                new ColorDrawable(MainActivity.ACCENT_COLOR));
-
-        //change status bar color
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(darkenColor(MainActivity.ACCENT_COLOR));
-        }
-    }
-
-    @ColorInt
-    int darkenColor(@ColorInt int color) {
-        float[] hsv = new float[3];
-        android.graphics.Color.colorToHSV(color, hsv);
-        hsv[2] *= 0.8f;
-        return android.graphics.Color.HSVToColor(hsv);
-    }
 
 
 }

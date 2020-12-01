@@ -26,12 +26,12 @@ package com.gsnathan.pdfviewer;
 
 import android.app.ProgressDialog;
 
-import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity;
+//import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ProgressActivity extends CyaneaAppCompatActivity {
+public class ProgressActivity extends AppCompatActivity {
 
     @VisibleForTesting
     public ProgressDialog mProgressDialog;

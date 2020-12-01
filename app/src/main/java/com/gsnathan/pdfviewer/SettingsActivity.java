@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -14,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -81,33 +85,33 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
         });
 
-        updateAccentColor();
+        updateActionBar();
 
     }
 
     private void setupActionBar() {
         ActionBar actionBar = getActionBar();
-        if (actionBar != null)
+        if (actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
-
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
     }
 
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            if (!super.onMenuItemSelected(featureId, item)) {
-                NavUtils.navigateUpFromSameTask(this);
-            }
-            return true;
-        }
-        return super.onMenuItemSelected(featureId, item);
-    }
+//    @Override
+//    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == android.R.id.home) {
+//            if (!super.onMenuItemSelected(featureId, item)) {
+//                NavUtils.navigateUpFromSameTask(this);
+//            }
+//            return true;
+//        }
+//        return super.onMenuItemSelected(featureId, item);
+//    }
 
 
     /**
@@ -127,26 +131,23 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
     }
 
-    private void updateAccentColor(){
-        //change toolbar color
-        getSupportActionBar().setBackgroundDrawable(
-                new ColorDrawable(MainActivity.ACCENT_COLOR));
+    private void updateActionBar() {
 
-        //change status bar color
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(darkenColor(MainActivity.ACCENT_COLOR));
-        }
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
-    @ColorInt
-    int darkenColor(@ColorInt int color) {
-        float[] hsv = new float[3];
-        android.graphics.Color.colorToHSV(color, hsv);
-        hsv[2] *= 0.8f;
-        return android.graphics.Color.HSVToColor(hsv);
+    public static Drawable changeBackArrowColor(Context context, int color) {
+        String resName;
+        int res;
+
+        resName = Build.VERSION.SDK_INT >= 23 ? "abc_ic_ab_back_material" : "abc_ic_ab_back_mtrl_am_alpha";
+        res = context.getResources().getIdentifier(resName, "drawable", context.getPackageName());
+
+        final Drawable upArrow = context.getResources().getDrawable(res);
+        upArrow.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+
+        return upArrow;
     }
-
-
 }

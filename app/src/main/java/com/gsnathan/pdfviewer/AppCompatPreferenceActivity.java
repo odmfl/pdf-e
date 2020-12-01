@@ -7,7 +7,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jaredrummler.cyanea.app.CyaneaPreferenceActivity;
+//import com.jaredrummler.cyanea.app.CyaneaPreferenceActivity;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
@@ -15,7 +15,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
-public abstract class AppCompatPreferenceActivity extends CyaneaPreferenceActivity {
+public abstract class AppCompatPreferenceActivity extends PreferenceActivity {//CyaneaPreferenceActivity {
 
     private AppCompatDelegate mDelegate;
 
@@ -93,6 +93,13 @@ public abstract class AppCompatPreferenceActivity extends CyaneaPreferenceActivi
     protected void onDestroy() {
         super.onDestroy();
         getDelegate().onDestroy();
+    }
+
+    private AppCompatDelegate getDelegate() {
+        if (mDelegate == null) {
+            mDelegate = AppCompatDelegate.create(this, null);
+        }
+        return mDelegate;
     }
 
     public void invalidateOptionsMenu() {
