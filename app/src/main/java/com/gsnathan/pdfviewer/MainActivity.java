@@ -51,6 +51,7 @@ import android.provider.OpenableColumns;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.app.ActivityCompat;
@@ -67,6 +68,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
@@ -115,7 +117,8 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
 
     @ViewById
     PDFView pdfView;
-   // public static int ACCENT_COLOR=0;
+    private TextView tv_page_number, tv_title;
+    // public static int ACCENT_COLOR=0;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -125,7 +128,7 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
         pdfFileName = "";
 
         prefManager = PreferenceManager.getDefaultSharedPreferences(this);
-       // onFirstInstall();
+        // onFirstInstall();
         //onFirstUpdate();
         handleIntent(getIntent());
 
@@ -140,7 +143,12 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
         RateThisApp.onCreate(this);
         RateThisApp.showRateDialogIfNeeded(this);
 
-       // fetchAccentColor(this);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar);
+        View view = getSupportActionBar().getCustomView();
+        tv_title = view.findViewById(R.id.tv_title);
+        tv_page_number = view.findViewById(R.id.tv_page_number);
+        // fetchAccentColor(this);
     }
 
     private void onFirstInstall() {
@@ -230,7 +238,7 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            if(pdfView != null) {
+            if (pdfView != null) {
                 if (pdfView.isZooming())
                     hideBottomNavigationView((BottomNavigationView) findViewById(R.id.bottom_navigation));
                 else {
@@ -251,7 +259,7 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
         } else {
             displayFromAsset(SAMPLE_FILE);
         }
-        setTitle(pdfFileName);
+        tv_title.setText(pdfFileName);
         hideProgressDialog();
         handler.post(runnable);
     }
@@ -395,7 +403,12 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
     @Override
     public void onPageChanged(int page, int pageCount) {
         pageNumber = page;
-        setTitle(String.format("%s %s / %s", pdfFileName + " ", page + 1, pageCount));
+        setActionbarTitlePageNumber(pdfFileName, page, pageCount);
+    }
+
+    private void setActionbarTitlePageNumber(String filename, int page, int pageCount) {
+        tv_title.setText(filename);
+        tv_page_number.setText(String.format("%s / %s", page + 1, pageCount));
     }
 
     public String getFileName(Uri uri) {
@@ -440,7 +453,7 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
         input.setPadding(19, 19, 19, 19);
         input.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this, R.style.CustomAlertDialog)
                 .setTitle(R.string.password)
                 .setView(input)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -458,7 +471,7 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
     void getMeta() {
         PdfDocument.Meta meta = pdfView.getDocumentMeta();
         if (meta != null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomAlertDialog);
             builder.setTitle(R.string.meta)
                     .setMessage("Title: " + meta.getTitle() + "\n" + "Author: " + meta.getAuthor() + "\n" + "Creation Date: " + meta.getCreationDate())
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
