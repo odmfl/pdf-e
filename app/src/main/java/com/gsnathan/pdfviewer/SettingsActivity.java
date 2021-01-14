@@ -56,7 +56,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 getResources().getDisplayMetrics());
 
         getListView().setPadding(horizontalMargin, topMargin, horizontalMargin, verticalMargin);
-
+        getListView().setDivider(new ColorDrawable(Color.TRANSPARENT));
+        getListView().setDividerHeight(0);
         Preference button = findPreference("reload_pref");
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
