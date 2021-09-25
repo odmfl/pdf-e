@@ -24,17 +24,12 @@
 
 package com.gsnathan.pdfviewer;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,29 +37,26 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import io.github.tonnyl.whatsnew.WhatsNew;
-import io.github.tonnyl.whatsnew.item.WhatsNewItem;
-
 public class Utils {
 
     public static boolean tempBool = false;
 
     static void showLog(AppCompatActivity context) {
-        WhatsNew log = WhatsNew.newInstance(
+        Intent intent = new Intent(context, ChangeLogActivity.class);
+        context.startActivity(intent);
+        /*WhatsNew log = WhatsNew.newInstance(
                 new WhatsNewItem("Bottom Bar", "Removed FAB and replaced it with bottom bar", R.drawable.star_icon),
                 new WhatsNewItem("Bug Fixes", "Fixed crashes on Android Q", R.drawable.thumbs_icon)
                 );
-        log.setTitleColor(ContextCompat.getColor(context, R.color.colorAccent));
+        log.setTitleColor(ContextCompat.getColor(context, R.color.color_default_accent));
         log.setTitleText(context.getResources().getString(R.string.appChangelog));
         log.setButtonText(context.getResources().getString(R.string.buttonLog));
-        log.setButtonBackground(ContextCompat.getColor(context, R.color.colorPrimary));
-        log.setButtonTextColor(ContextCompat.getColor(context, R.color.colorAccent));
-        log.setItemTitleColor(ContextCompat.getColor(context, R.color.colorAccent));
-        log.setItemContentColor(Color.parseColor("#808080"));
+        log.setButtonBackground(ContextCompat.getColor(context, R.color.color_default_accent));
+        log.setButtonTextColor(ContextCompat.getColor(context, R.color.color_default_view_on_accent));
+        log.setItemTitleColor(ContextCompat.getColor(context, R.color.color_default_accent));
+        log.setItemContentColor(ContextCompat.getColor(context, R.color.color_default_background));
 
-        log.show(context.getSupportFragmentManager(), "Log");
+        log.show(context.getSupportFragmentManager(), "Log");*/
     }
 
     public static String getAndroidVersion() {
@@ -105,7 +97,7 @@ public class Utils {
         return BuildConfig.VERSION_NAME;
     }
 
-    static void readFromInputStreamToOutputStream (InputStream inputStream, OutputStream outputStream) throws IOException {
+    static void readFromInputStreamToOutputStream(InputStream inputStream, OutputStream outputStream) throws IOException {
         byte[] buffer = new byte[8 * 1024];
         int bytesRead = inputStream.read(buffer);
         while (bytesRead > -1) {
@@ -117,7 +109,7 @@ public class Utils {
         outputStream.close();
     }
 
-    static File createFileFromInputStream (File cacheDir, String fileName, InputStream inputStream) throws IOException {
+    static File createFileFromInputStream(File cacheDir, String fileName, InputStream inputStream) throws IOException {
         File file = File.createTempFile(fileName, null, cacheDir);
         OutputStream outputStream = new FileOutputStream(file);
         Utils.readFromInputStreamToOutputStream(inputStream, outputStream);

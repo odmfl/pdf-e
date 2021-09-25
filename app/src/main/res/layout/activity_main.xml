@@ -39,10 +39,11 @@ tools:context="com.gsnathan.pdfviewer.MainActivity">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/color_default_foreground"
+        android:background="@color/color_default_primary_dark"
+        app:itemBackground="@color/color_default_primary_dark"
         android:minHeight="?android:attr/actionBarSize"
-        app:itemIconTint="@color/color_default_blue1"
-        app:itemTextColor="@color/color_default_blue1"
+        app:itemIconTint="@color/color_default_accent"
+        app:itemTextColor="@color/color_default_accent"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/fab_menu" />
 

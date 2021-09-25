@@ -32,6 +32,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -252,7 +253,7 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
     @AfterViews
     void afterViews() {
         showProgressDialog();
-        pdfView.setBackgroundColor(Color.LTGRAY);
+        pdfView.setBackgroundColor(ContextCompat.getColor(this, R.color.color_default_background));
         Constants.THUMBNAIL_RATIO = 1f;
         if (uri != null) {
             displayFromUri(uri);
@@ -285,6 +286,7 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
                 .autoSpacing(prefManager.getBoolean("scroll_pref", false))
                 .pageSnap(prefManager.getBoolean("snap_pref", false))
                 .pageFling(prefManager.getBoolean("fling_pref", false))
+                .nightMode(isInDarkMode())
                 .load();
     }
 
@@ -318,8 +320,15 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
                     .autoSpacing(prefManager.getBoolean("scroll_pref", false))
                     .pageSnap(prefManager.getBoolean("snap_pref", false))
                     .pageFling(prefManager.getBoolean("fling_pref", false))
+                    .nightMode(isInDarkMode())
                     .load();
         }
+    }
+
+    boolean isInDarkMode() {
+        int nightModeFlags = getResources().getConfiguration().uiMode &
+                        Configuration.UI_MODE_NIGHT_MASK;
+        return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
     }
 
     void displayFromFile(File file) {
@@ -340,6 +349,7 @@ public class MainActivity extends ProgressActivity implements OnPageChangeListen
                 .autoSpacing(prefManager.getBoolean("scroll_pref", false))
                 .pageSnap(prefManager.getBoolean("snap_pref", false))
                 .pageFling(prefManager.getBoolean("fling_pref", false))
+                .nightMode(isInDarkMode())
                 .load();
 
     }

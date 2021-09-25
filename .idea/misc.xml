@@ -5,7 +5,38 @@
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../../Users/fahim/.gradle/caches/transforms-2/files-2.1/33aec417da38041a7bd258f63808c643/jetified-whatsnew-0.1.1/res/layout/item.xml" value="0.11979166666666667" />
+        <entry key="../../../../../Users/fahim/.gradle/caches/transforms-2/files-2.1/33aec417da38041a7bd258f63808c643/jetified-whatsnew-0.1.1/res/layout/whatsnew_main.xml" value="0.11979166666666667" />
+        <entry key="../../../../../layout/custom_preview.xml" value="0.13489583333333333" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1359375" />
+        <entry key="app/src/main/res/drawable/alert_icon.xml" value="0.1359375" />
+        <entry key="app/src/main/res/drawable/appbar_back.xml" value="0.21296296296296297" />
+        <entry key="app/src/main/res/drawable/code_icon.xml" value="0.1359375" />
+        <entry key="app/src/main/res/drawable/dialog_inset.xml" value="0.1359375" />
+        <entry key="app/src/main/res/drawable/folder_icon.xml" value="0.21296296296296297" />
+        <entry key="app/src/main/res/drawable/github_icon.xml" value="0.21296296296296297" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.1359375" />
+        <entry key="app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.1359375" />
+        <entry key="app/src/main/res/drawable/lock_icon.xml" value="0.21296296296296297" />
+        <entry key="app/src/main/res/drawable/meta_info.xml" value="0.21296296296296297" />
+        <entry key="app/src/main/res/drawable/popup_background.xml" value="0.1359375" />
+        <entry key="app/src/main/res/drawable/print_icon.xml" value="0.21296296296296297" />
+        <entry key="app/src/main/res/drawable/share_icon.xml" value="0.21296296296296297" />
+        <entry key="app/src/main/res/layout/activity_about.xml" value="0.11979166666666667" />
+        <entry key="app/src/main/res/layout/activity_change_log.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.11979166666666667" />
+        <entry key="app/src/main/res/layout/custom_action_bar.xml" value="0.11979166666666667" />
+        <entry key="app/src/main/res/layout/item_change_log.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/settings_toolbar.xml" value="0.22826086956521738" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1359375" />
+        <entry key="app/src/main/res/xml/preferences.xml" value="0.22826086956521738" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

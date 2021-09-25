@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gsnathan.pdfviewer">
+    package="com.gsnathan.pdfviewer" >
 
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -13,11 +13,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
 
         <activity
             android:name=".MainActivity_"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -76,7 +76,7 @@
             android:name=".AboutActivity"
             android:label="About"
             android:parentActivityName=".MainActivity_"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
@@ -85,19 +85,24 @@
         </activity>
         <activity
             android:name=".MainIntroActivity"
-            android:label="@string/intro" /> <!-- Contr -->
-
+            android:label="@string/intro"
+            android:theme="@style/AppTheme" /> <!-- Contr -->
         <activity
             android:name=".SettingsActivity"
             android:label="Settings"
             android:parentActivityName=".MainActivity_"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="MainActivity_" />
         </activity>
+
+        <activity
+            android:name=".ChangeLogActivity"
+            android:theme="@style/AppTheme"
+            android:label="@string/appChangelog"/>
     </application>
 
 </manifest>
