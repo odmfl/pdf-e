@@ -33,22 +33,30 @@ import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
 //import com.jaredrummler.cyanea.prefs.CyaneaThemePickerActivity;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 public class MainIntroActivity extends AppIntro {
-
-    int bg = Color.parseColor("#2481a1");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
 
+        int bg = ContextCompat.getColor(this, R.color.color_default_background);
+        int divider = ContextCompat.getColor(this, R.color.color_default_divider);
+        int primaryText = ContextCompat.getColor(this, R.color.color_default_primary_text);
+        int secondaryText = ContextCompat.getColor(this, R.color.color_default_secondary_text);
+        int accent = ContextCompat.getColor(this, R.color.color_default_accent);
+        int primaryDark = ContextCompat.getColor(this, R.color.color_default_primary_dark);
+
         SliderPage first = new SliderPage();
         first.setTitle(getString(R.string.title_intro));
         first.setDescription(getString(R.string.description__intro));
         first.setImageDrawable(R.mipmap.ic_launcher);
         first.setBgColor(bg);
+        first.setTitleColor(primaryText);
+        first.setDescColor(secondaryText);
         addSlide(AppIntroFragment.newInstance(first));
 
         SliderPage second = new SliderPage();
@@ -56,6 +64,8 @@ public class MainIntroActivity extends AppIntro {
         second.setDescription(getString(R.string.description_open));
         second.setImageDrawable(R.drawable.opensource_wide);
         second.setBgColor(bg);
+        second.setTitleColor(primaryText);
+        second.setDescColor(secondaryText);
         addSlide(AppIntroFragment.newInstance(second));
 
         SliderPage third = new SliderPage();
@@ -63,12 +73,19 @@ public class MainIntroActivity extends AppIntro {
         third.setDescription(getString(R.string.description__permission));
         third.setImageDrawable(R.drawable.patterns_permissions);
         third.setBgColor(bg);
+        third.setTitleColor(primaryText);
+        third.setDescColor(secondaryText);
         addSlide(AppIntroFragment.newInstance(third));
 
+        setNextArrowColor(accent);
+        setSeparatorColor(divider);
+        setColorDoneText(accent);
+        setIndicatorColor(accent, accent);
         showSkipButton(false);
+        setNavBarColor(R.color.color_default_primary_dark);
+
         askForPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 3);
-        showStatusBar(false);
-        setNavBarColor("#2481a1");
+        showStatusBar(true);
     }
 
     @Override
