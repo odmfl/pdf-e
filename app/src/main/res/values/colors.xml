@@ -24,13 +24,13 @@
   -->
 
 <resources>
-    <color name="color_default_primary">@lineageos.platform:color/color_default_primary</color>
-    <color name="color_default_primary_dark">@lineageos.platform:color/color_default_primary_dark</color>
-    <color name="color_default_accent">@lineageos.platform:color/color_default_accent</color>
-    <color name="color_default_view_on_accent">@lineageos.platform:color/color_default_view_on_accent</color>
-    <color name="color_default_background">@lineageos.platform:color/color_default_background</color>
-    <color name="color_default_foreground">@lineageos.platform:color/color_default_foreground</color>
-    <color name="color_default_primary_text">@lineageos.platform:color/color_default_primary_text</color>
-    <color name="color_default_secondary_text">@lineageos.platform:color/color_default_secondary_text</color>
-    <color name="color_default_divider">@lineageos.platform:color/color_default_divider</color>
+    <color name="color_default_primary">@color/e_action_bar</color>
+    <color name="color_default_primary_dark">@color/e_action_bar</color>
+    <color name="color_default_accent">@color/e_accent</color>
+    <color name="color_default_view_on_accent">@color/e_background</color>
+    <color name="color_default_background">@color/e_background</color>
+    <color name="color_default_foreground">@color/e_floating_background</color>
+    <color name="color_default_primary_text">@color/e_primary_text_color</color>
+    <color name="color_default_secondary_text">@color/e_secondary_text_color</color>
+    <color name="color_default_divider">@color/e_divider_color</color>
 </resources>

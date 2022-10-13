@@ -41,6 +41,7 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url 'https://gitlab.e.foundation/api/v4/groups/9/-/packages/maven'}
         maven { url "https://jitpack.io" }
         google()
         jcenter()
